@@ -29,6 +29,10 @@ public class Interview extends BaseTimeEntity{
     @Column(columnDefinition = "text")
     private String qualification;
 
+    @ManyToOne
+    @JoinColumn(name = "u_id", nullable = false)
+    private Member member;
+
     @Builder.Default
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
     private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
