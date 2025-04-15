@@ -2,9 +2,16 @@ package com.example.intelliview.domain;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "interview")
 public class Interview extends BaseTimeEntity{
@@ -17,15 +24,14 @@ public class Interview extends BaseTimeEntity{
 
     private String occupation;
 
-    // qualification 컬럼은 text 타입: 상세 내용
     @Column(columnDefinition = "text")
     private String qualification;
 
-    // 한 인터뷰는 여러 인터뷰 답변(InterviewAnswer)을 가질 수 있음
+    @Builder.Default
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
-    private List<InterviewAnswer> interviewAnswers;
+    private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
 
-    // 한 인터뷰는 여러 인터뷰 리포트(InterviewReport)를 가질 수 있음
+    @Builder.Default
     @OneToMany(mappedBy = "interview", cascade = CascadeType.ALL)
-    private List<InterviewReport> interviewReports;
+    private List<InterviewReport> interviewReports = new ArrayList<>();
 }

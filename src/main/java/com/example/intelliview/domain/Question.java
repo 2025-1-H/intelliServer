@@ -1,10 +1,16 @@
 package com.example.intelliview.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "question")
 public class Question extends BaseTimeEntity{
@@ -22,12 +28,11 @@ public class Question extends BaseTimeEntity{
     private String category;
     private Integer difficulty;
 
+    @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<UserDailyQuestion> userDailyQuestions = new ArrayList<>();
 
-    // Question 하나는 여러 인터뷰 답변(InterviewAnswer)에서 사용될 수 있음
+    @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
-
-    public Question() {}
 }

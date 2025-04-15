@@ -1,7 +1,13 @@
 package com.example.intelliview.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "interview_report")
 public class InterviewReport extends BaseTimeEntity{
@@ -10,7 +16,6 @@ public class InterviewReport extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Many InterviewReport → One Interview
     @ManyToOne
     @JoinColumn(name = "i_id", nullable = false)
     private Interview interview;

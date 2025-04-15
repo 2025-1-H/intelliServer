@@ -1,10 +1,16 @@
 package com.example.intelliview.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "member")
 public class Member extends BaseTimeEntity{
@@ -23,11 +29,11 @@ public class Member extends BaseTimeEntity{
     @Column(name = "daily_category")
     private DailyCategory dailyCategory;
 
-    // 한 명의 회원은 여러 인터뷰 답변(InterviewAnswer)을 가질 수 있음
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
 
-    // 한 명의 회원은 여러 인터뷰 답변(InterviewAnswer)을 가질 수 있음
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<UserDailyQuestion> userDailyQuestions = new ArrayList<>();
 

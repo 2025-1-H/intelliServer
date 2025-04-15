@@ -1,7 +1,13 @@
 package com.example.intelliview.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "interview_answer")
 public class InterviewAnswer extends BaseTimeEntity{
