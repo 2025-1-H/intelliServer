@@ -1,6 +1,6 @@
 package com.example.intelliview.domain;
 
-public enum DailyCategory {
+public enum Category {
     BACKEND,
     FRONTEND,
     DEVOPS,

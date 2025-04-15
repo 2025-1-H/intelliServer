@@ -16,7 +16,6 @@ public class InterviewAnswer extends BaseTimeEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Many InterviewAnswer → One Interview
     @ManyToOne
     @JoinColumn(name = "i_id", nullable = false)
     private Interview interview;

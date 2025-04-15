@@ -26,8 +26,8 @@ public class Member extends BaseTimeEntity{
     private String role;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "daily_category")
-    private DailyCategory dailyCategory;
+    @Column(name = "category")
+    private Category category;
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)

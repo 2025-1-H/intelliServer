@@ -25,7 +25,9 @@ public class Question extends BaseTimeEntity{
     @Column(name = "model_answer", columnDefinition = "text")
     private String modelAnswer;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
     private Integer difficulty;
 
     @Builder.Default
