@@ -2,9 +2,9 @@ spring:
   application:
     name: intelliview
   datasource:
-    url: jdbc:postgresql://localhost:5432/intelliview
-    username: root
-    password: 14357
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PW}
   jpa:
     hibernate:
       ddl-auto: create
