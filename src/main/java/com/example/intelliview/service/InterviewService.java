@@ -7,6 +7,7 @@ import com.example.intelliview.domain.Question;
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto;
 import com.example.intelliview.repository.InterviewRepository;
+import com.example.intelliview.repository.MemberRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -22,13 +23,14 @@ public class InterviewService {
 
     private final InterviewRepository interviewRepository;
     private final BedrockService bedrockService;
+    private final MemberRepository memberRepository;
 
     public Long getInterviewInfo(InterviewInfoDto interviewInfoDto) {
         Interview interview = Interview.builder()
             .status(InterviewStatus.SCHEDULED)
             .occupation(interviewInfoDto.getOccupation())
             .qualification(interviewInfoDto.getQualification())
-            .member(new Member())
+            .member((memberRepository.findById(1L).orElseThrow()))
             .build();
         interviewRepository.save(interview);
         return interview.getId();
