@@ -57,7 +57,7 @@ public class DailyQuestionController {
         return ResponseEntity.ok("답변 성공!");
     }
 
-    @GetMapping("/feddback")
+    @GetMapping("/feedback")
     public ResponseEntity<FeedbackResponse> getFeedback(@AuthenticationPrincipal Member member) {
         if (memberRepository.findById(1L).isEmpty()) {
             member = Member.builder()
