@@ -39,4 +39,5 @@ public class Question extends BaseTimeEntity{
     @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
+
 }
