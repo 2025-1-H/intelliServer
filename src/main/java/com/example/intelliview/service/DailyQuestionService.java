@@ -122,6 +122,17 @@ public class DailyQuestionService {
     }
 
     public void setUserCategory(Member member, Category category) {
+        if (member.getCategory() != null) {
+            throw new IllegalStateException("이미 카테고리가 등록되어 있습니다.");
+        }
+        member.setCategory(category);
+        memberRepository.save(member);
+    }
+
+    public void updateUserCategory(Member member, Category category) {
+        if (member.getCategory() == null) {
+            throw new IllegalStateException("카테고리가 등록되어 있지 않습니다. 먼저 카테고리를 등록해주세요.");
+        }
         member.setCategory(category);
         memberRepository.save(member);
     }

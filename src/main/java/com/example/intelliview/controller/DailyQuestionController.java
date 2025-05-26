@@ -88,4 +88,20 @@ public class DailyQuestionController {
         dailyQuestionService.setUserCategory(member, request.getCategory());
         return ResponseEntity.ok("카테고리 설정 완료");
     }
+
+    @PatchMapping("/category")
+    public ResponseEntity<String> updateMemberCategory(@AuthenticationPrincipal Member member, @RequestBody CategoryRequest request){
+        if (memberRepository.findById(1L).isEmpty()) {
+            member = Member.builder()
+                    .id(1L)
+                    .email("test@gmail.com")
+                    .username("test")
+                    .build();
+        }else{
+            member = memberRepository.findById(1L).get();
+        }
+
+        dailyQuestionService.updateUserCategory(member, request.getCategory());
+        return ResponseEntity.ok("카테고리 설정 완료");
+    }
 }
