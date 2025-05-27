@@ -27,7 +27,7 @@ public class JoinService {
 
         Boolean isExist = memberRepository.existsByEmail(email);
         if (isExist) {
-            return;
+            throw new RuntimeException("이미 존재하는 회원입니다.");
         }
 
         Member data = new Member();
