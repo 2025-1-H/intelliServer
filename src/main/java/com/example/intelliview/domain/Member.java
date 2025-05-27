@@ -10,9 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "member")
 @Getter
 @Setter
-@Table(name = "member")
 public class Member extends BaseTimeEntity{
 
     @Id
@@ -41,4 +41,7 @@ public class Member extends BaseTimeEntity{
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<UserDailyQuestion> userDailyQuestions = new ArrayList<>();
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

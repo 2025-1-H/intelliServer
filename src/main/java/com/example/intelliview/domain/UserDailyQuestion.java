@@ -3,6 +3,7 @@ package com.example.intelliview.domain;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Builder
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "user_daily_question")
+@Getter
 public class UserDailyQuestion extends BaseTimeEntity{
 
     @Id
@@ -29,4 +31,8 @@ public class UserDailyQuestion extends BaseTimeEntity{
 
     @Column(name = "attempt_count")
     private Integer attemptCount;
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 }
