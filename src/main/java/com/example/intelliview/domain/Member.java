@@ -1,9 +1,7 @@
 package com.example.intelliview.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "member")
 public class Member extends BaseTimeEntity{
 
