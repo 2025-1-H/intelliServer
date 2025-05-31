@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class InterviewInfoDto {
     private String occupation;
     private String qualification;
+    private String githubUsername;
 }

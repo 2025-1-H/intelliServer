@@ -32,6 +32,9 @@ public class Question extends BaseTimeEntity{
 
     private Integer difficulty;
 
+    @Enumerated(EnumType.STRING)
+    private QuestionType questionType;
+
     @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<UserDailyQuestion> userDailyQuestions = new ArrayList<>();

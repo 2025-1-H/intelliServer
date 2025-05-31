@@ -4,12 +4,15 @@ import com.example.intelliview.domain.Interview;
 import com.example.intelliview.domain.InterviewStatus;
 import com.example.intelliview.domain.Member;
 import com.example.intelliview.domain.Question;
+import com.example.intelliview.domain.QuestionType;
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto;
+import com.example.intelliview.dto.interview.InterviewQuestionsDto.questionDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
+import java.io.IOException;
 import java.util.ArrayList;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,7 @@ public class InterviewService {
         Interview interview = Interview.builder()
             .status(InterviewStatus.SCHEDULED)
             .occupation(interviewInfoDto.getOccupation())
+            .githubUsername(interviewInfoDto.getGithubUsername())
             .qualification(interviewInfoDto.getQualification())
             .member((memberRepository.findById(1L).orElseThrow()))
             .build();
@@ -36,11 +40,26 @@ public class InterviewService {
         return interview.getId();
     }
 
-    public InterviewQuestionsDto startInterview(Long id) throws JsonProcessingException {
+    public InterviewQuestionsDto.questionsResponseDto startInterview(Long id) throws IOException {
         Interview interview = interviewRepository.findById(id).orElseThrow();
         interview.updateStatus(InterviewStatus.IN_PROGRESS);
-        return InterviewQuestionsDto.builder()
-            .questions(bedrockService.generateInterviewQuestions(interview))
+        ArrayList<InterviewQuestionsDto.questionDto> questionDtos = new ArrayList<>();
+        ArrayList<String> projectQuestions = bedrockService.createProjectQuestions(interview);
+        for (String question : projectQuestions) {
+            questionDtos.add(questionDto.builder()
+                .category(String.valueOf(QuestionType.PROJECT))
+                .question(question)
+                .build());
+        }
+        ArrayList<String> interviewQuestions = bedrockService.generateInterviewQuestions(interview);
+        for (String question : interviewQuestions) {
+            questionDtos.add(questionDto.builder()
+                .category(String.valueOf(QuestionType.TECHNICAL))
+                .question(question)
+                .build());
+        }
+        return InterviewQuestionsDto.questionsResponseDto.builder()
+            .questions(questionDtos)
             .build();
     }
 }
