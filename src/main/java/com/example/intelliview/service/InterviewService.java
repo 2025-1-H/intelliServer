@@ -2,15 +2,12 @@ package com.example.intelliview.service;
 
 import com.example.intelliview.domain.Interview;
 import com.example.intelliview.domain.InterviewStatus;
-import com.example.intelliview.domain.Member;
-import com.example.intelliview.domain.Question;
 import com.example.intelliview.domain.QuestionType;
 import com.example.intelliview.dto.interview.InterviewInfoDto;
-import com.example.intelliview.dto.interview.InterviewQuestionsDto;
-import com.example.intelliview.dto.interview.InterviewQuestionsDto.questionDto;
+import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
+import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,26 +37,26 @@ public class InterviewService {
         return interview.getId();
     }
 
-    public InterviewQuestionsDto.questionsResponseDto startInterview(Long id) throws IOException {
+    public QuestionsResponseDto startInterview(Long id) throws IOException {
         Interview interview = interviewRepository.findById(id).orElseThrow();
         interview.updateStatus(InterviewStatus.IN_PROGRESS);
-        ArrayList<InterviewQuestionsDto.questionDto> questionDtos = new ArrayList<>();
+        ArrayList<QuestionDto> QuestionDtos = new ArrayList<>();
         ArrayList<String> projectQuestions = bedrockService.createProjectQuestions(interview);
         for (String question : projectQuestions) {
-            questionDtos.add(questionDto.builder()
+            QuestionDtos.add(QuestionDto.builder()
                 .category(String.valueOf(QuestionType.PROJECT))
                 .question(question)
                 .build());
         }
         ArrayList<String> interviewQuestions = bedrockService.generateInterviewQuestions(interview);
         for (String question : interviewQuestions) {
-            questionDtos.add(questionDto.builder()
+            QuestionDtos.add(QuestionDto.builder()
                 .category(String.valueOf(QuestionType.TECHNICAL))
                 .question(question)
                 .build());
         }
-        return InterviewQuestionsDto.questionsResponseDto.builder()
-            .questions(questionDtos)
+        return QuestionsResponseDto.builder()
+            .questions(QuestionDtos)
             .build();
     }
 }

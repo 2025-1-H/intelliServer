@@ -20,11 +20,9 @@ public class AwsConfig {
     @Value("${AWS_REGION}")
     private String region;
 
-
-    AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
-
     @Bean
     public BedrockRuntimeClient bedrockRuntimeClient() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
         return BedrockRuntimeClient.builder()
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .region(Region.of(region))
@@ -33,6 +31,7 @@ public class AwsConfig {
 
     @Bean
     public BedrockAgentRuntimeClient bedrockAgentRuntimeClient() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
         return BedrockAgentRuntimeClient.builder()
             .region(Region.of(region))
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
@@ -41,6 +40,7 @@ public class AwsConfig {
 
     @Bean
     public S3Client s3Client() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
         return S3Client.builder()
             .region(Region.of(region))
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))

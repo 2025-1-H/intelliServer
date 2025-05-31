@@ -97,7 +97,6 @@ public class JSoupService {
 
     public String getRepositoryZipUrl(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
-
         Element downloadLink = doc.selectFirst("a.prc-ActionList-ActionListContent-sg9-x.prc-Link-Link-85e08");
         if (downloadLink != null) {
             String href = downloadLink.attr("href");

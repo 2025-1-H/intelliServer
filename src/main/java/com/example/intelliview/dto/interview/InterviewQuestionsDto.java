@@ -13,15 +13,15 @@ public class InterviewQuestionsDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    public class questionsResponseDto{
-        ArrayList<questionDto> questions;
+    public static class QuestionsResponseDto {
+        ArrayList<QuestionDto> questions;
     }
 
     @Builder
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
-    public class questionDto{
+    public static class QuestionDto {
         private String question;
         private String category;
     }
