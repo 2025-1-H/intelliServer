@@ -97,12 +97,9 @@ public class JSoupService {
 
     public String getRepositoryZipUrl(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
-        Element downloadLink = doc.selectFirst("a.prc-ActionList-ActionListContent-sg9-x.prc-Link-Link-85e08");
-        if (downloadLink != null) {
-            String href = downloadLink.attr("href");
-            return "https://github.com" + href;
-        } else {
-            throw new IOException("Download ZIP 링크를 찾을 수 없습니다.");
-        }
+        Element branchElement = doc.selectFirst("span[class*=prc-Text-Text-]");
+        String defaultBranch = branchElement != null ? branchElement.text().trim() : "main";
+        log.info(url + "/archive/refs/heads/" + defaultBranch + ".zip");
+        return url + "/archive/refs/heads/" + defaultBranch + ".zip";
     }
 }
