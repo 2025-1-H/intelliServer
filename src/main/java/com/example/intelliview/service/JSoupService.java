@@ -99,7 +99,6 @@ public class JSoupService {
         Document doc = Jsoup.connect(url).get();
         Element branchElement = doc.selectFirst("span[class*=prc-Text-Text-]");
         String defaultBranch = branchElement != null ? branchElement.text().trim() : "main";
-        log.info(url + "/archive/refs/heads/" + defaultBranch + ".zip");
         return url + "/archive/refs/heads/" + defaultBranch + ".zip";
     }
 }

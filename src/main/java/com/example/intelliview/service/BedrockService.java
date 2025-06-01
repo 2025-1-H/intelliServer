@@ -144,15 +144,15 @@ public class BedrockService{
         return(questionList);
     }
 
-    public ArrayList<String> createProjectQuestions(Interview interview) throws IOException {
+    public void createProjectQuestions(Interview interview) throws IOException {
         Member member = interview.getMember();
-        jsoupService.uploadToS3(interview.getGithubUsername(), member.getId());
+        jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
         String basicQuery = """
             당신은 기술 면접관 역할을 맡고 있습니다.
             
             후보자는 "{{OCCUPATION}}"이며, 과거 프로젝트들은 Knowledge Base에 연결된 S3 경로 "{{S3_PATH}}"에 저장되어 있습니다.
             
-            이 프로젝트들의 내용을 분석하여, 후보자의 기술 스택, 구조적 선택, 구현 방식 등을 바탕으로 면접 질문 3개를 생성해주세요.
+            이 프로젝트들의 내용을 분석하여, 후보자의 기술 스택, 구조적 선택, 구현 방식 등을 바탕으로 면접 질문 5개를 생성해주세요.
             
             각 질문은 다음 정보를 포함해야 합니다:
             - question (질문 내용, 한국어)
@@ -166,6 +166,7 @@ public class BedrockService{
         String query = basicQuery.replace("{{OCCUPATION}}", interview.getOccupation());
         query = query.replace("{{S3_PATH}}", "repos/" + member.getId());
         String response = askAgent(query);
+        log.info(response);
         ObjectMapper objectMapper = new ObjectMapper();
         List<GeneratedQuestionDto> questions;
         try {
@@ -176,7 +177,6 @@ public class BedrockService{
             throw new RuntimeException("Failed to parse questions from Bedrock response", e);
         }
 
-        ArrayList<String> questionList = new ArrayList<>();
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
                 .question(generatedQuestion.getQuestion())
@@ -186,10 +186,7 @@ public class BedrockService{
                 .questionType(QuestionType.PROJECT)
                 .build();
             questionRepository.save(question);
-            questionList.add(generatedQuestion.getQuestion());
         }
-        return(questionList);
-
     }
 
     public String askAgent(String userInput) {
@@ -217,9 +214,8 @@ public class BedrockService{
             RetrieveAndGenerateResponse response = bedrockAgentRuntimeClient.retrieveAndGenerate(request);
             return response.output().text();
         } catch (Exception e) {
-            System.err.println("Error details: " + e.getMessage());
             e.printStackTrace();
-            return "";
+            return e.getMessage();
         }
     }
 

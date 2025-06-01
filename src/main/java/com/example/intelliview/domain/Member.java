@@ -26,6 +26,7 @@ public class Member extends BaseTimeEntity{
     private String password;
     private String salt;
     private String role;
+    private String githubUsername;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "category")

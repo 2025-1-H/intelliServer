@@ -2,6 +2,8 @@ package com.example.intelliview.controller;
 
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
+import com.example.intelliview.repository.InterviewRepository;
+import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class InterviewController {
 
     private final InterviewService interviewService;
+    private final BedrockService bedrockService;
+    private final InterviewRepository interviewRepository;
 
     @PostMapping("/info")
     public ResponseEntity<Long> getInterviewInfo(@RequestBody InterviewInfoDto interviewInfoDto) {
@@ -29,5 +33,11 @@ public class InterviewController {
     public ResponseEntity<QuestionsResponseDto> startInterview(@PathVariable Long id)
         throws IOException {
         return ResponseEntity.ok(interviewService.startInterview(id));
+    }
+
+    @PostMapping("/{interviewId}/project-questions")
+    public ResponseEntity<Void> createProjectQuestions(@PathVariable Long interviewId) throws IOException {
+        bedrockService.createProjectQuestions(interviewRepository.findById(interviewId).orElseThrow());
+        return ResponseEntity.ok().build();
     }
 }

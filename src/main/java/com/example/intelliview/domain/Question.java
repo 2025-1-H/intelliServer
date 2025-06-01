@@ -36,6 +36,9 @@ public class Question extends BaseTimeEntity{
     private QuestionType questionType;
 
     @Builder.Default
+    private Boolean isSolved = false;
+
+    @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<UserDailyQuestion> userDailyQuestions = new ArrayList<>();
 
