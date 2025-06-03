@@ -2,7 +2,7 @@ spring:
   application:
     name: intelliview
   jwt:
-    secret: vmfhaltmskdlstkfkdgodyroqkfwkdbalroqkfwkdbalaaaaaaaaaaaaaaaabbbbbcc
+    secret: ${JWT_SECRET}
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
