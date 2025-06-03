@@ -2,11 +2,14 @@ package com.example.intelliview.controller;
 
 import com.example.intelliview.dto.user.JoinDTO;
 import com.example.intelliview.service.JoinService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @ResponseBody
 public class JoinController {
 
@@ -17,9 +20,9 @@ public class JoinController {
     }
 
     @PostMapping("/api/v1/auth/signup")
-    public String joinProcess(JoinDTO joinDTO) {
+    public ResponseEntity<String> joinProcess(JoinDTO joinDTO) {
 
         joinService.joinProcess(joinDTO);
-        return "success";
+        return ResponseEntity.ok("회원가입 성공");
     }
 }
