@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeClient;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
+import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 public class AwsConfig {
@@ -37,6 +39,15 @@ public class AwsConfig {
         return S3Client.builder()
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .region(Region.of(region))
+            .build();
+    }
+
+    @Bean
+    public BedrockAgentRuntimeClient bedrockAgentRuntimeClient() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        return BedrockAgentRuntimeClient.builder()
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .build();
     }
 }
