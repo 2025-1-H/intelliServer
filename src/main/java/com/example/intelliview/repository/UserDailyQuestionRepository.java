@@ -1,5 +1,7 @@
 package com.example.intelliview.repository;
 
+import com.example.intelliview.domain.Member;
+import com.example.intelliview.domain.Question;
 import com.example.intelliview.domain.UserDailyQuestion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +20,6 @@ public interface UserDailyQuestionRepository extends JpaRepository<UserDailyQues
 
     @Query("SELECT udq FROM UserDailyQuestion udq WHERE udq.member.id = :userId AND udq.question.id = :questionId ORDER BY udq.createdAt DESC")
     List<UserDailyQuestion> findByMemberIdAndQuestionIdOrderByCreatedAtDesc(@Param("userId") Long userId, @Param("questionId") Long questionId);
+
+    List<UserDailyQuestion> findAllByMemberAndCreatedAtBetweenAndAnswerIsNotNull(Member member, LocalDateTime start, LocalDateTime end);
 }
