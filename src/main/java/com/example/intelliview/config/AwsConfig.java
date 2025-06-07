@@ -10,6 +10,8 @@ import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeCl
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
+import software.amazon.awssdk.services.s3.S3Client;
+
 @Configuration
 public class AwsConfig {
 
@@ -19,6 +21,8 @@ public class AwsConfig {
     private String secretKey;
     @Value("${AWS_REGION}")
     private String region;
+    @Value("${AWS_ACCOUNT_ID}")
+    private String accountId;
 
     @Bean
     public BedrockRuntimeClient bedrockRuntimeClient() {
@@ -30,18 +34,18 @@ public class AwsConfig {
     }
 
     @Bean
-    public BedrockAgentRuntimeClient bedrockAgentRuntimeClient() {
+    public S3Client s3Client() {
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
-        return BedrockAgentRuntimeClient.builder()
-            .region(Region.of(region))
+        return S3Client.builder()
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+            .region(Region.of(region))
             .build();
     }
 
     @Bean
-    public S3Client s3Client() {
+    public BedrockAgentRuntimeClient bedrockAgentRuntimeClient() {
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
-        return S3Client.builder()
+        return BedrockAgentRuntimeClient.builder()
             .region(Region.of(region))
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .build();

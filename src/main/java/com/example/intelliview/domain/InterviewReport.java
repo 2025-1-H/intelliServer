@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.Instant;
 
 @Builder
 @AllArgsConstructor
@@ -25,5 +28,4 @@ public class InterviewReport extends BaseTimeEntity{
 
     @Column(name = "video_url")
     private String videoUrl;
-
 }
