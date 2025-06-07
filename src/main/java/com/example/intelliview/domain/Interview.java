@@ -31,6 +31,8 @@ public class Interview extends BaseTimeEntity{
     @Column(columnDefinition = "text")
     private String qualification;
 
+    private String githubUsername;
+
     @ManyToOne
     @JoinColumn(name = "u_id", nullable = false)
     private Member member;
