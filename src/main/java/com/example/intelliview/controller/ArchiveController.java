@@ -56,6 +56,15 @@ public class ArchiveController {
             @PathVariable int month,
             @PathVariable int day
     ) {
+        if (memberRepository.findById(1L).isEmpty()) {
+            member = Member.builder()
+                    .id(1L)
+                    .email("test@gmail.com")
+                    .username("test")
+                    .build();
+        }else{
+            member = memberRepository.findById(1L).get();
+        }
         DayArchiveDto response = archiveService.getDayArchive(member, year, month, day);
         return ResponseEntity.ok(response);
     }

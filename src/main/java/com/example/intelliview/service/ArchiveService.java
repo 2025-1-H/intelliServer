@@ -85,7 +85,7 @@ public class ArchiveService {
 
         UserDailyQuestionArchiveDto dailyQuestionDto = dailyQuestions.isEmpty()
                 ? null
-                : UserDailyQuestionArchiveDto.from(dailyQuestions.get(0)); // 혹시 여러 개면 첫 번째만
+                : UserDailyQuestionArchiveDto.from(dailyQuestions.getFirst());
 
         List<InterviewAnswerArchiveDto> interviewDtos = interviewAnswers.stream()
                 .map(InterviewAnswerArchiveDto::from)
