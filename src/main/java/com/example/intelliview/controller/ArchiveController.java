@@ -7,6 +7,7 @@ import com.example.intelliview.dto.CategoryRequest;
 import com.example.intelliview.dto.DailyAnswerRequest;
 import com.example.intelliview.dto.DailyQuestionResponse;
 import com.example.intelliview.dto.FeedbackResponse;
+import com.example.intelliview.dto.archive.ArchiveSummaryDto;
 import com.example.intelliview.dto.archive.DayArchiveDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
@@ -31,7 +32,7 @@ public class ArchiveController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/{year}/{month}")
-    public ResponseEntity<List<DayArchiveDto>> getMonthArchive(@AuthenticationPrincipal Member member, @PathVariable int year, @PathVariable int month) {
+    public ResponseEntity<ArchiveSummaryDto> getMonthArchive(@AuthenticationPrincipal Member member, @PathVariable int year, @PathVariable int month) {
         if (memberRepository.findById(1L).isEmpty()) {
             member = Member.builder()
                     .id(1L)
@@ -44,7 +45,8 @@ public class ArchiveController {
 
         System.out.println("👉 [Get] 요청자: " + member.getUsername());
 
-        List<DayArchiveDto> response = archiveService.getMonthArchive(member, year, month);
+//        List<DayArchiveDto> response = archiveService.getMonthArchive(member, year, month);
+        ArchiveSummaryDto response = archiveService.getMonthArchiveSummary(member, year, month);
 
         return ResponseEntity.ok(response);
     }

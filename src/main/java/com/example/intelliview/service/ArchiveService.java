@@ -4,6 +4,7 @@ import com.example.intelliview.domain.InterviewAnswer;
 import com.example.intelliview.domain.Member;
 import com.example.intelliview.domain.Question;
 import com.example.intelliview.domain.UserDailyQuestion;
+import com.example.intelliview.dto.archive.ArchiveSummaryDto;
 import com.example.intelliview.dto.archive.DayArchiveDto;
 import com.example.intelliview.dto.archive.InterviewAnswerArchiveDto;
 import com.example.intelliview.dto.archive.UserDailyQuestionArchiveDto;
@@ -20,6 +21,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -28,6 +30,37 @@ import java.util.stream.Collectors;
 public class ArchiveService {
 
     private final UserDailyQuestionRepository userDailyQuestionRepository;
+
+    public ArchiveSummaryDto getMonthArchiveSummary(Member member, int year, int month) {
+        List<DayArchiveDto> result = getMonthArchive(member, year, month); // 기존 로직 재활용
+
+        int totalCount = result.stream()
+                .mapToInt(day -> {
+                    int dq = day.getDailyQuestion() != null ? 1 : 0;
+                    int ia = day.getInterviews() != null ? day.getInterviews().size() : 0;
+                    return dq + ia;
+                })
+                .sum();
+
+        List<Integer> allScores = result.stream()
+                .flatMap(day -> day.getInterviews().stream())
+                .map(InterviewAnswerArchiveDto::getScore)
+                .filter(Objects::nonNull)
+                .toList();
+
+        Double averageScore = allScores.isEmpty() ? null
+                : allScores.stream().mapToInt(Integer::intValue).average().orElse(0);
+
+        Integer maxScore = allScores.isEmpty() ? null
+                : allScores.stream().max(Integer::compare).orElse(null);
+
+        return ArchiveSummaryDto.builder()
+                .totalCount(totalCount)
+                .averageScore(averageScore)
+                .maxScore(maxScore)
+                .days(result)
+                .build();
+    }
 
     public List<DayArchiveDto> getMonthArchive(Member member, int year, int month) {
         LocalDate start = LocalDate.of(year, month, 1);
@@ -85,7 +118,7 @@ public class ArchiveService {
 
         UserDailyQuestionArchiveDto dailyQuestionDto = dailyQuestions.isEmpty()
                 ? null
-                : UserDailyQuestionArchiveDto.from(dailyQuestions.getFirst());
+                : UserDailyQuestionArchiveDto.from(dailyQuestions.get(0));
 
         List<InterviewAnswerArchiveDto> interviewDtos = interviewAnswers.stream()
                 .map(InterviewAnswerArchiveDto::from)
