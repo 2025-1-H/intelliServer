@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import com.example.intelliview.service.BedrockService;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InterviewController {
 
     private final InterviewService interviewService;
+    private final BedrockService bedrockService;
 
     @PostMapping("/info")
     public ResponseEntity<Long> getInterviewInfo(@RequestBody InterviewInfoDto interviewInfoDto) {
@@ -31,5 +34,13 @@ public class InterviewController {
     @GetMapping("/{id}/start")
     public ResponseEntity<InterviewQuestionsDto> startInterview(@PathVariable Long id) throws JsonProcessingException {
         return ResponseEntity.ok(interviewService.startInterview(id));
+    }
+
+    @PostMapping("/{id}/report")
+    public ResponseEntity<String> analyzeInterviewVideo(@PathVariable Long id,
+                                                        @RequestParam("file") MultipartFile videoFile)
+                                                        throws JsonProcessingException {
+        String feedback = bedrockService.uploadToS3AndAnalyzeInterview(videoFile, id);
+        return ResponseEntity.ok(feedback);
     }
 }
