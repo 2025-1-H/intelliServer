@@ -9,9 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
 
-    @Query(value = "SELECT * FROM question q " +
-        "WHERE q.question_type = 'PROJECT' AND q.is_solved = FALSE " +
-        "ORDER BY RAND() LIMIT 3",
+    @Query(value = "SELECT * FROM question " +
+        "WHERE id IN ( " +
+        "    SELECT id FROM question " +
+        "    WHERE question_type = 'PROJECT' AND is_solved = FALSE " +
+        "    ORDER BY RANDOM() " +
+        "    LIMIT 3 " +
+        ")",
         nativeQuery = true)
     List<Question> findRandomUnsolvedProjectQuestions();
 

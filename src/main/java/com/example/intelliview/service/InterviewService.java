@@ -14,6 +14,7 @@ import com.example.intelliview.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class InterviewService {
     public QuestionsResponseDto startInterview(Long id) throws IOException {
         Interview interview = interviewRepository.findById(id).orElseThrow();
         interview.updateStatus(InterviewStatus.IN_PROGRESS);
-        ArrayList<QuestionDto> QuestionDtos = new ArrayList<>();
+        List<QuestionDto> QuestionDtos = new ArrayList<>();
         ArrayList<String> interviewQuestions = bedrockService.generateInterviewQuestions(interview);
         for (String question : interviewQuestions) {
             QuestionDtos.add(QuestionDto.builder()

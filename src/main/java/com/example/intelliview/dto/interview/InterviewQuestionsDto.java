@@ -1,6 +1,6 @@
 package com.example.intelliview.dto.interview;
 
-import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +14,7 @@ public class InterviewQuestionsDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor(access = AccessLevel.PROTECTED)
     public static class QuestionsResponseDto {
-        ArrayList<QuestionDto> questions;
+        List<QuestionDto> questions;
     }
 
     @Builder

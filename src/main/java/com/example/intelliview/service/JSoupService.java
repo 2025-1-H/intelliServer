@@ -3,6 +3,7 @@ package com.example.intelliview.service;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -32,8 +33,8 @@ public class JSoupService {
 
     private final S3Client s3Client;
 
-    public ArrayList<String> getPinnedRepository(String username) throws IOException {
-        ArrayList<String> pinnedRepository = new ArrayList<>();
+    public List<String> getPinnedRepository(String username) throws IOException {
+        List<String> pinnedRepository = new ArrayList<>();
         String url = "https://github.com/" + username;
         Document doc = Jsoup.parse(String.valueOf(Jsoup.connect(url).get()));
         Elements pinnedItems = doc.select("ol.js-pinned-items-reorder-list > li");
@@ -48,7 +49,7 @@ public class JSoupService {
     }
 
     public void uploadToS3(String username, Long memberId) throws IOException {
-        ArrayList<String> repositoryList = getPinnedRepository(username);
+        List<String> repositoryList = getPinnedRepository(username);
         for (String repository : repositoryList) {
             // Github ZIP 다운로드 링크 가져오기
             String zipUrl = getRepositoryZipUrl(repository);
