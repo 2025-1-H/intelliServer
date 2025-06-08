@@ -1,6 +1,8 @@
 # 베이스 이미지 설정
 FROM openjdk:21-jdk-slim
 
+ENV TZ=Asia/Seoul
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 RUN apt-get update && apt-get install -y curl
 
 # 작업 디렉토리를 설정
