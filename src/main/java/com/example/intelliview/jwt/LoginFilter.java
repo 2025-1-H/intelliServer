@@ -44,7 +44,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 ObjectMapper objectMapper = new ObjectMapper();
                 LoginDTO loginDTO = objectMapper.readValue(request.getInputStream(), LoginDTO.class);
 
-                username = loginDTO.getUsername();
+                username = loginDTO.getEmail();
                 password = loginDTO.getPassword();
 
             } else {
