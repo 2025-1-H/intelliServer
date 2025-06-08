@@ -30,12 +30,12 @@ public class JoinService {
             throw new RuntimeException("이미 존재하는 회원입니다.");
         }
 
-        Member data = new Member();
-
-        data.setUsername(username);
-        data.setEmail(email);
-        data.setPassword(bCryptPasswordEncoder.encode(password));
-        data.setRole("ROLE_ADMIN");
+        Member data = Member.builder()
+                .username(username)
+                .email(email)
+                .password(bCryptPasswordEncoder.encode(password))
+                .role("ROLE_ADMIN")
+                .build();
 
         memberRepository.save(data);
     }
