@@ -74,7 +74,7 @@ public class SecurityConfig {
 
                         .requestMatchers(
                                 // 인터뷰 관련
-                                "/api/v1/interview/**"
+                                "/api/v1/interview/**",
                                 // 데일리 질문 관련
                                 "/api/v1/daily/**",
                                 // 기타
