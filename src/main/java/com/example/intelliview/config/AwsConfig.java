@@ -10,6 +10,8 @@ import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeCl
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.s3.S3Client;
 
+import software.amazon.awssdk.services.s3.S3Client;
+
 @Configuration
 public class AwsConfig {
 
@@ -19,6 +21,10 @@ public class AwsConfig {
     private String secretKey;
     @Value("${AWS_REGION}")
     private String region;
+    @Value("${AWS_VIDEO_REGION}")
+    private String tokyoregion;
+    @Value("${AWS_ACCOUNT_ID}")
+    private String accountId;
 
     @Bean
     public BedrockRuntimeClient bedrockRuntimeClient() {
@@ -27,6 +33,24 @@ public class AwsConfig {
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .region(Region.of(region))
             .build();
+    }
+
+    @Bean
+    public S3Client s3Client() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        return S3Client.builder()
+            .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+            .region(Region.of(region))
+            .build();
+    }
+
+    @Bean
+    public S3Client s3ClientVideo() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        return S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+                .region(Region.of(tokyoregion))
+                .build();
     }
 
     @Bean
@@ -39,11 +63,12 @@ public class AwsConfig {
     }
 
     @Bean
-    public S3Client s3Client() {
+    public BedrockRuntimeClient bedrockNovaRuntimeClient() {
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
-        return S3Client.builder()
-            .region(Region.of(region))
-            .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
-            .build();
+        return BedrockRuntimeClient.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+                .region(Region.of(tokyoregion))
+                .build();
     }
+
 }

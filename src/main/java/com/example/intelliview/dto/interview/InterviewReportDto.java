@@ -6,11 +6,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class InterviewReportDto {
-    private String videoUrl;
+    private Long id;
+    private Long interviewId;
     private String content;
+    private String videoUrl;
+
+    private LocalDateTime createdAt;
 }

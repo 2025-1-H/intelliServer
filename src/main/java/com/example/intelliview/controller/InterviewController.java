@@ -7,6 +7,8 @@ import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
 import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,14 @@ public class InterviewController {
     public ResponseEntity<QuestionsResponseDto> startInterview(@PathVariable Long id)
         throws IOException {
         return ResponseEntity.ok(interviewService.startInterview(id));
+    }
+
+    @PostMapping("/{id}/report")
+    public ResponseEntity<String> analyzeInterviewVideo(@PathVariable Long id,
+                                                        @RequestParam("file") MultipartFile videoFile)
+            throws JsonProcessingException {
+        String feedback = bedrockService.uploadToS3AndAnalyzeInterview(videoFile, id);
+        return ResponseEntity.ok(feedback);
     }
 
     @PostMapping("/{interviewId}/project-questions")
