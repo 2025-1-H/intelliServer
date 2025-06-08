@@ -94,8 +94,6 @@ jobs:
         id: clean-task-def
         run: |
           jq 'del(.enableFaultInjection)' ${{ steps.render-task-def.outputs.task-definition }} > cleaned-task-def.json
-          cat cleaned-task-def.json
-          echo "::set-output name=clean_task_def::cleaned-task-def.json"
 
       - name: Deploy updated task definition to Amazon ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
