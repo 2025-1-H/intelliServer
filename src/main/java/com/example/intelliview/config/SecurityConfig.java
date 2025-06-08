@@ -49,7 +49,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(Customizer.withDefaults()); // 변경된 형태
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()));
         http
                 .csrf((auth) -> auth.disable());
         http
@@ -66,8 +66,20 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/api/v1/auth/signup").permitAll()
-                        .requestMatchers("/admin", "/api/v1/interview/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/",
+                                "/api/v1/auth/login",
+                                "/api/v1/auth/signup"
+                        ).permitAll()
+
+                        .requestMatchers(
+                                // 인터뷰 관련
+                                "/api/v1/interview/**"
+                                // 데일리 질문 관련
+                                "/api/v1/daily/**",
+                                // 기타
+                                "/admin"
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated());
 
         http
