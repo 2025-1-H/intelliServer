@@ -23,9 +23,9 @@ public class SwaggerConfig {
         );
         return new OpenAPI()
             .components(new Components())
-            .info(apiInfo());
-            //.addSecurityItem(securityRequirement)
-            //.components(components);
+            .info(apiInfo())
+            .addSecurityItem(securityRequirement)
+            .components(components);
     }
     private io.swagger.v3.oas.models.info.Info apiInfo() {
         return new Info()
