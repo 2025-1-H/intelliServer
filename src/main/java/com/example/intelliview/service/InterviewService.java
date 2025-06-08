@@ -1,6 +1,7 @@
 package com.example.intelliview.service;
 
 import com.example.intelliview.domain.Interview;
+import com.example.intelliview.domain.InterviewReport;
 import com.example.intelliview.domain.InterviewStatus;
 import com.example.intelliview.domain.Member;
 import com.example.intelliview.domain.Question;
@@ -8,6 +9,8 @@ import com.example.intelliview.domain.QuestionType;
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionDto;
+import com.example.intelliview.dto.interview.InterviewReportResponseDto;
+import com.example.intelliview.repository.InterviewReportRepository;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
 import com.example.intelliview.repository.QuestionRepository;
@@ -29,6 +32,7 @@ public class InterviewService {
     private final BedrockService bedrockService;
     private final MemberRepository memberRepository;
     private final QuestionRepository questionRepository;
+    private final InterviewReportRepository interviewReportRepository;
 
     public Long getInterviewInfo(InterviewInfoDto interviewInfoDto) {
         Member member = memberRepository.findById(1L).orElseThrow();
@@ -62,6 +66,14 @@ public class InterviewService {
         }
         return QuestionsResponseDto.builder()
             .questions(QuestionDtos)
+            .build();
+    }
+
+    public InterviewReportResponseDto getInterviewReport(Long id) {
+        InterviewReport interviewReport = interviewReportRepository.findByInterviewId(id);
+        return InterviewReportResponseDto.builder()
+            .videoUrl(interviewReport.getVideoUrl())
+            .content(interviewReport.getContent())
             .build();
     }
 }

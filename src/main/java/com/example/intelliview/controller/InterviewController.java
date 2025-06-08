@@ -2,7 +2,7 @@ package com.example.intelliview.controller;
 
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
-import com.example.intelliview.dto.interview.InterviewReportDto;
+import com.example.intelliview.dto.interview.InterviewReportResponseDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,7 +55,7 @@ public class InterviewController {
     }
 
     @GetMapping("/{id}/report")
-    public ResponseEntity<InterviewReportDto> getInterviewReport(@PathVariable Long id) {
-
+    public ResponseEntity<InterviewReportResponseDto> getInterviewReport(@PathVariable Long id) {
+        return ResponseEntity.ok(interviewService.getInterviewReport(id));
     }
 }
