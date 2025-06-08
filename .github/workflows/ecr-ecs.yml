@@ -25,10 +25,10 @@ jobs:
           java-version: '21'
 
       # 3. application.yml 파일 생성
-      - name: Create application.yml
-        run: |
-          touch ./src/main/resources/application.yml
-          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
+#      - name: Create application.yml
+#        run: |
+#          touch ./src/main/resources/application.yml
+#          echo "${{ secrets.APPLICATION_PROPERTIES }}" > ./src/main/resources/application.yml
 
       # 4. 도커 빌드 환경 설정 (buildx 설치)
       - name: Set up Docker Buildx
