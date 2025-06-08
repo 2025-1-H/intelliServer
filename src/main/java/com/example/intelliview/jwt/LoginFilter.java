@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -20,7 +21,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JWTUtil jwtUtil;
 
     public LoginFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
-
+        super.setRequiresAuthenticationRequestMatcher(
+                new AntPathRequestMatcher("/api/v1/auth/login", "POST")
+        );
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
     }
