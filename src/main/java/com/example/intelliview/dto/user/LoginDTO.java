@@ -5,11 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JoinDTO {
-
-    //private Long id;
+public class LoginDTO {
     private String username;
     private String password;
-    //private String role;
-    private String email;
 }
