@@ -2,6 +2,7 @@ package com.example.intelliview.controller;
 
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
+import com.example.intelliview.dto.interview.InterviewReportDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
@@ -39,5 +40,10 @@ public class InterviewController {
     public ResponseEntity<Void> createProjectQuestions(@PathVariable Long interviewId) throws IOException {
         bedrockService.createProjectQuestions(interviewRepository.findById(interviewId).orElseThrow());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}/report")
+    public ResponseEntity<InterviewReportDto> getInterviewReport(@PathVariable Long id) {
+
     }
 }
