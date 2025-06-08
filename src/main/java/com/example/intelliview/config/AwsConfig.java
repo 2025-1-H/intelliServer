@@ -21,6 +21,8 @@ public class AwsConfig {
     private String secretKey;
     @Value("${AWS_REGION}")
     private String region;
+    @Value("${AWS_VIDEO_REGION}")
+    private String tokyoregion;
     @Value("${AWS_ACCOUNT_ID}")
     private String accountId;
 
@@ -43,6 +45,15 @@ public class AwsConfig {
     }
 
     @Bean
+    public S3Client s3ClientVideo() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        return S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+                .region(Region.of(tokyoregion))
+                .build();
+    }
+
+    @Bean
     public BedrockAgentRuntimeClient bedrockAgentRuntimeClient() {
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
         return BedrockAgentRuntimeClient.builder()
@@ -50,4 +61,14 @@ public class AwsConfig {
             .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
             .build();
     }
+
+    @Bean
+    public BedrockRuntimeClient bedrockNovaRuntimeClient() {
+        AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+        return BedrockRuntimeClient.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsBasicCredentials))
+                .region(Region.of(tokyoregion))
+                .build();
+    }
+
 }

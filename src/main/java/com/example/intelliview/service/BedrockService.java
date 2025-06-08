@@ -40,6 +40,7 @@ import software.amazon.awssdk.services.bedrockagentruntime.model.RetrieveAndGene
 import software.amazon.awssdk.services.bedrockagentruntime.model.RetrieveAndGenerateInput;
 import software.amazon.awssdk.services.bedrockagentruntime.model.RetrieveAndGenerateRequest;
 import software.amazon.awssdk.services.bedrockagentruntime.model.RetrieveAndGenerateResponse;
+import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeAsyncClient;
 import software.amazon.awssdk.services.bedrockruntime.BedrockRuntimeClient;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelRequest;
 import software.amazon.awssdk.services.bedrockruntime.model.InvokeModelResponse;
@@ -55,6 +56,7 @@ public class BedrockService{
 
     private final BedrockRuntimeClient bedrockRuntimeClient;
     private final BedrockAgentRuntimeClient bedrockAgentRuntimeClient;
+    private final BedrockRuntimeClient bedrockNovaRuntimeClient;
     private final QuestionRepository questionRepository;
     private final InterviewReportRepository interviewReportRepository;
     private final InterviewRepository interviewRepository;
@@ -214,7 +216,8 @@ public class BedrockService{
                     .body(SdkBytes.fromUtf8String(requestPayload.toString()))
                     .build();
 
-            InvokeModelResponse response = bedrockRuntimeClient.invokeModel(request);
+
+            InvokeModelResponse response = bedrockNovaRuntimeClient.invokeModel(request);
             String responseBody = response.body().asUtf8String();
 
             // 5. 응답 파싱

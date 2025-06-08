@@ -16,10 +16,10 @@ import java.util.UUID;
 @Slf4j
 public class S3Uploader {
 
-    @Value("${S3_BUCKET_NAME}")
+    @Value("${S3_VIDEO_BUCKET_NAME}")
     private String bucketName;
 
-    private final S3Client s3Client;
+    private final S3Client s3ClientVideo;
 
     public UploadedVideoDto upload(MultipartFile file) {
         try {
@@ -31,7 +31,7 @@ public class S3Uploader {
                     .contentType(file.getContentType())
                     .build();
 
-            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+            s3ClientVideo.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
 
             String s3Uri = "s3://" + bucketName + "/" + key;
             return new UploadedVideoDto(key, s3Uri);
