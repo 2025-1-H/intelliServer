@@ -106,6 +106,7 @@ public class SecurityConfig {
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedMethod("*");
         configuration.addAllowedHeader("*");
+        configuration.addExposedHeader("Authorization");
         configuration.setAllowCredentials(true);
 /*
         configuration.setAllowedOrigins(Arrays.asList(
