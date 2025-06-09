@@ -24,6 +24,7 @@ public class JoinService {
         String username = joinDTO.getUsername();
         String password = joinDTO.getPassword();
         String email = joinDTO.getEmail();
+        String githubUsername = joinDTO.getGithubUsername();
 
         Boolean isExist = memberRepository.existsByEmail(email);
         if (isExist) {
@@ -34,6 +35,7 @@ public class JoinService {
                 .username(username)
                 .email(email)
                 .password(bCryptPasswordEncoder.encode(password))
+                .githubUsername(githubUsername)
                 .role("ROLE_ADMIN")
                 .build();
 

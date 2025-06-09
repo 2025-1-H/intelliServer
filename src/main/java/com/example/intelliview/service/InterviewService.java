@@ -10,6 +10,7 @@ import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionDto;
 import com.example.intelliview.dto.interview.InterviewReportResponseDto;
+import com.example.intelliview.jwt.JWTUtil;
 import com.example.intelliview.repository.InterviewReportRepository;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
@@ -33,9 +34,10 @@ public class InterviewService {
     private final MemberRepository memberRepository;
     private final QuestionRepository questionRepository;
     private final InterviewReportRepository interviewReportRepository;
+    private final JWTUtil jwtUtil;
 
-    public Long getInterviewInfo(InterviewInfoDto interviewInfoDto) {
-        Member member = memberRepository.findById(1L).orElseThrow();
+    public Long getInterviewInfo(InterviewInfoDto interviewInfoDto, String token) {
+        Member member = memberRepository.findByEmail(jwtUtil.getEmail(token));
         Interview interview = Interview.builder()
             .status(InterviewStatus.SCHEDULED)
             .occupation(interviewInfoDto.getOccupation())

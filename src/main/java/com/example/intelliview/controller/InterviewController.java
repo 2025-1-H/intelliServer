@@ -6,6 +6,7 @@ import com.example.intelliview.dto.interview.InterviewReportResponseDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -30,8 +31,9 @@ public class InterviewController {
     private final InterviewRepository interviewRepository;
 
     @PostMapping("/info")
-    public ResponseEntity<Long> getInterviewInfo(@RequestBody InterviewInfoDto interviewInfoDto) {
-        return ResponseEntity.ok(interviewService.getInterviewInfo(interviewInfoDto));
+    public ResponseEntity<Long> getInterviewInfo(@RequestBody InterviewInfoDto interviewInfoDto, HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        return ResponseEntity.ok(interviewService.getInterviewInfo(interviewInfoDto, token));
     }
 
     @GetMapping("/{id}/start")
