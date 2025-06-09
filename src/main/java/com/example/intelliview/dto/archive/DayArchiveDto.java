@@ -12,5 +12,5 @@ import java.util.List;
 public class DayArchiveDto {
     private LocalDate date;
     private UserDailyQuestionArchiveDto dailyQuestion;
-    private List<InterviewAnswerArchiveDto> interviews;
+    private List<InterviewReportArchiveDto> interviews;
 }

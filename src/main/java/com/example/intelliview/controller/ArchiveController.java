@@ -9,6 +9,7 @@ import com.example.intelliview.dto.DailyQuestionResponse;
 import com.example.intelliview.dto.FeedbackResponse;
 import com.example.intelliview.dto.archive.ArchiveSummaryDto;
 import com.example.intelliview.dto.archive.DayArchiveDto;
+import com.example.intelliview.dto.user.CustomUserDetails;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.repository.MemberRepository;
 import com.example.intelliview.service.ArchiveService;
@@ -32,16 +33,17 @@ public class ArchiveController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/{year}/{month}")
-    public ResponseEntity<ArchiveSummaryDto> getMonthArchive(@AuthenticationPrincipal Member member, @PathVariable int year, @PathVariable int month) {
-        if (memberRepository.findById(1L).isEmpty()) {
-            member = Member.builder()
-                    .id(1L)
-                    .email("test@gmail.com")
-                    .username("test")
-                    .build();
-        }else{
-            member = memberRepository.findById(1L).get();
-        }
+    public ResponseEntity<ArchiveSummaryDto> getMonthArchive(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable int year, @PathVariable int month) {
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
+//        if (memberRepository.findById(1L).isEmpty()) {
+//            member = Member.builder()
+//                    .id(1L)
+//                    .email("test@gmail.com")
+//                    .username("test")
+//                    .build();
+//        }else{
+//            member = memberRepository.findById(1L).get();
+//        }
 
         System.out.println("👉 [Get] 요청자: " + member.getUsername());
 
@@ -53,20 +55,21 @@ public class ArchiveController {
 
     @GetMapping("/{year}/{month}/{day}")
     public ResponseEntity<DayArchiveDto> getDayArchive(
-            @AuthenticationPrincipal Member member,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable int year,
             @PathVariable int month,
             @PathVariable int day
     ) {
-        if (memberRepository.findById(1L).isEmpty()) {
-            member = Member.builder()
-                    .id(1L)
-                    .email("test@gmail.com")
-                    .username("test")
-                    .build();
-        }else{
-            member = memberRepository.findById(1L).get();
-        }
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
+//        if (memberRepository.findById(1L).isEmpty()) {
+//            member = Member.builder()
+//                    .id(1L)
+//                    .email("test@gmail.com")
+//                    .username("test")
+//                    .build();
+//        }else{
+//            member = memberRepository.findById(1L).get();
+//        }
         DayArchiveDto response = archiveService.getDayArchive(member, year, month, day);
         return ResponseEntity.ok(response);
     }
