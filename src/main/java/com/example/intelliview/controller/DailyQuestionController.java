@@ -26,7 +26,7 @@ public class DailyQuestionController {
 
     @GetMapping("/question")
     public ResponseEntity<DailyQuestionResponse> getQuestion(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
         // 멤버 정보 전체 출력
         System.out.println("==== 인증된 Member 정보 ====");
         if (member != null) {
@@ -58,7 +58,7 @@ public class DailyQuestionController {
 
     @PostMapping("/question")
     public ResponseEntity<String> submitAnswer(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody DailyAnswerRequest request){
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)
@@ -75,7 +75,7 @@ public class DailyQuestionController {
 
     @GetMapping("/feedback")
     public ResponseEntity<FeedbackResponse> getFeedback(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)
@@ -92,7 +92,7 @@ public class DailyQuestionController {
 
     @PostMapping("/category")
     public ResponseEntity<String> setMemberCategory(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CategoryRequest request){
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)
@@ -109,7 +109,7 @@ public class DailyQuestionController {
 
     @PatchMapping("/category")
     public ResponseEntity<String> updateMemberCategory(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CategoryRequest request){
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)

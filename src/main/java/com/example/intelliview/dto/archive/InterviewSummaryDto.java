@@ -1,5 +1,6 @@
 package com.example.intelliview.dto.archive;
 
+import com.example.intelliview.domain.Interview;
 import lombok.*;
 
 @Builder
@@ -8,5 +9,10 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class InterviewSummaryDto {
     private Long id;
-    private String title;
+
+    public static InterviewSummaryDto from(Interview interview) {
+        return InterviewSummaryDto.builder()
+                .id(interview.getId())
+                .build();
+    }
 }

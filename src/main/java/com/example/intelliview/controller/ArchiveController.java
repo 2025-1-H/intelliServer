@@ -34,7 +34,7 @@ public class ArchiveController {
 
     @GetMapping("/{year}/{month}")
     public ResponseEntity<ArchiveSummaryDto> getMonthArchive(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable int year, @PathVariable int month) {
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)
@@ -60,7 +60,7 @@ public class ArchiveController {
             @PathVariable int month,
             @PathVariable int day
     ) {
-        Member member = memberRepository.findByUsername(userDetails.getMember().getUsername());
+        Member member = memberRepository.findByEmail(userDetails.getMember().getUsername());
 //        if (memberRepository.findById(1L).isEmpty()) {
 //            member = Member.builder()
 //                    .id(1L)
