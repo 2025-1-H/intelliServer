@@ -189,7 +189,148 @@ public class BedrockService{
                     )
             );
             contentArray.put(new JSONObject()
-                    .put("text", "이 면접 영상을 분석하고, 발표 전달력, 톤, 내용 완성도를 각각 1~5점으로 평가하고, 구체적인 피드백을 한국어로 작성해 주세요."));
+                    .put("text",
+                    """
+                    당신은 10년 이상의 경험을 가진 기술 면접 평가 전문가입니다.
+                    컴퓨터공학 및 웹 개발·인프라 분야의 실무 역량과 커뮤니케이션 스킬을 종합적으로 평가하는 전문성을 보유하고 있습니다.
+                    제공되는 면접 영상은 컴퓨터공학 전공자를 대상으로 한 웹 개발, 인프라 구성, 프로젝트 경험 등 실무 기반 질문에 대한 응답을 담고 있습니다.
+                    먼저 영상에서 제시된 기술적 질문들을 파악하고 요약한 후, 다음 항목에 대해 1-5점 척도로 평가하고 각 항목마다 구체적인 한국어 피드백 3문장 이상을 작성해주세요:
+
+                    1. 면접 태도:
+                    - 아이컨택: 카메라 응시의 자연스러움과 일관성
+                    - 손동작: 설명을 돕는 적절한 제스처 활용도
+                    - 표정: 자신감과 진정성이 드러나는 표현
+                    - 자세: 안정적이고 전문적인 포스처 유지
+                    - 긴장도: 과도한 경직성이나 산만함 여부
+
+                    2. 음성 표현:
+                    - 톤의 적절성: 상황에 맞는 음성 톤 사용
+                    - 발음 명료성: 전달하고자 하는 내용의 정확한 발음
+                    - 말하기 속도: 듣기 편한 적정 속도 유지
+                    - 강조와 억양: 핵심 포인트의 효과적인 강조
+                    - 음성 안정성: 떨림이나 불안정함 없는 일관된 음성
+
+                    3. 반언어적 표현:
+                    - 말의 리듬감: 자연스러운 화법과 적절한 쉼
+                    - 간투사 빈도: "음", "어", "그" 등 불필요한 간투사 사용 정도
+                    - 침묵 처리: 생각할 시간이 필요할 때의 자연스러운 대응
+                    - 감정 표현: 내용에 따른 적절한 감정적 뉘앙스
+                    - 흐름의 연속성: 끊김 없는 자연스러운 대화 진행
+
+                    4. 내용 구성:
+                    - 논리적 구조: 서론-본론-결론의 명확한 흐름
+                    - 질문 이해도: 면접관 질문의 핵심 의도 파악 정도
+                    - 구체성: 실제 경험이나 프로젝트 사례의 적절한 활용
+                    - 완결성: 답변의 완성도와 충분한 설명 제공
+                    - 연관성: 질문과 답변 간의 직접적 연결성
+
+                    5. 지식 전달력:
+                    - 전문 지식 정확성: 기술적 개념과 용어의 정확한 사용
+                    - 설명 능력: 복잡한 기술 내용의 이해하기 쉬운 전달
+                    - 실무 연결성: 이론과 실무 경험의 적절한 연계
+                    - 문제 해결 사고: 기술적 문제에 대한 논리적 접근법
+                    - 지식의 깊이: 표면적이지 않은 심화된 이해도 표현
+
+                    평가 척도:
+                    - 5점: 매우 우수 (전문가 수준의 뛰어난 역량)
+                    - 4점: 우수 (기대 수준을 상회하는 좋은 역량)
+                    - 3점: 보통 (기본적인 요구 사항을 충족하는 수준)
+                    - 2점: 부족 (개선이 필요한 수준)
+                    - 1점: 매우 부족 (상당한 개선이 필요한 수준)
+
+                    다음 HTML 형식으로 출력해주세요. 그 외의 설명이나 코멘트는 절대 포함하지 마세요:
+
+                            <div class="interview-evaluation">
+                             <div class="section">
+                               <h2>📋 질문 분석 및 응답 평가</h2>
+                               <div class="questions">
+                                 <div class="question-item">
+                                   <h3>질문 1</h3>
+                                   <p><strong>질문 요약:</strong> [질문 내용 요약]</p>
+                                   <p><strong>응답 평가:</strong> [응답의 적절성 및 기술적 정확성 평가]</p>
+                                   <p><strong>개선 제안:</strong> [구체적인 개선 방안]</p>
+                                 </div>
+                                 <div class="question-item">
+                                   <h3>질문 2</h3>
+                                   <p><strong>질문 요약:</strong> [질문 내용 요약]</p>
+                                   <p><strong>응답 평가:</strong> [응답의 적절성 및 기술적 정확성 평가]</p>
+                                   <p><strong>개선 제안:</strong> [구체적인 개선 방안]</p>
+                                 </div>
+                                 <div class="question-item">
+                                   <h3>질문 3</h3>
+                                   <p><strong>질문 요약:</strong> [질문 내용 요약]</p>
+                                   <p><strong>응답 평가:</strong> [응답의 적절성 및 기술적 정확성 평가]</p>
+                                   <p><strong>개선 제안:</strong> [구체적인 개선 방안]</p>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="section">
+                               <h2>🎯 세부 평가 항목</h2>
+                               <div class="evaluation-item">
+                                 <h3>1. 면접 태도</h3>
+                                 <div class="score">점수: <span class="score-value">[1-5점]</span>/5</div>
+                                 <div class="feedback">[구체적인 피드백 - 관찰된 행동과 개선점을 포함하여 3문장 이상]</div>
+                               </div>
+                               <div class="evaluation-item">
+                                 <h3>2. 음성 표현</h3>
+                                 <div class="score">점수: <span class="score-value">[1-5점]</span>/5</div>
+                                 <div class="feedback">[구체적인 피드백 - 음성의 장단점과 개선 방향을 제시하여 3문장 이상]</div>
+                               </div>
+                               <div class="evaluation-item">
+                                 <h3>3. 반언어적 표현</h3>
+                                 <div class="score">점수: <span class="score-value">[1-5점]</span>/5</div>
+                                 <div class="feedback">[구체적인 피드백 - 말하기 습관과 자연스러움을 평가하여 3문장 이상]</div>
+                               </div>
+                               <div class="evaluation-item">
+                                 <h3>4. 내용 구성</h3>
+                                 <div class="score">점수: <span class="score-value">[1-5점]</span>/5</div>
+                                 <div class="feedback">[구체적인 피드백 - 답변 구조와 논리성에 대한 평가를 3문장 이상]</div>
+                               </div>
+                               <div class="evaluation-item">
+                                 <h3>5. 지식 전달력</h3>
+                                 <div class="score">점수: <span class="score-value">[1-5점]</span>/5</div>
+                                 <div class="feedback">[구체적인 피드백 - 기술적 역량과 설명 능력을 평가하여 3문장 이상]</div>
+                               </div>
+                             </div>
+                             <div class="section">
+                               <h2>📊 종합 평가</h2>
+                               <div class="total-score">
+                                 <h3>총점: <span class="total-score-value">[총점]</span>/100</h3>
+                               </div>
+                               <div class="summary-section">
+                                 <div class="well-done">
+                                   <h4>✅ 잘한 점</h4>
+                                   <ul>
+                                     <li>[구체적인 강점 1]</li>
+                                     <li>[구체적인 강점 2]</li>
+                                     <li>[구체적인 강점 3]</li>
+                                   </ul>
+                                 </div>
+                                 <div class="to-improve">
+                                   <h4>🔧 개선할 점</h4>
+                                   <ul>
+                                     <li>[구체적인 개선점 1]</li>
+                                     <li>[구체적인 개선점 2]</li>
+                                     <li>[구체적인 개선점 3]</li>
+                                   </ul>
+                                 </div>
+                               </div>
+                               <div class="overall-summary">
+                                 <h4>💡 종합 의견</h4>
+                                 <p>[전반적인 면접 역량 평가 및 발전 방향 제시 - 150-200자 내외]</p>
+                               </div>
+                             </div>
+                            </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   평가 시 주의사항:
+                    1. 객관적이고 건설적인 피드백 제공
+                    2. 구체적인 관찰 내용을 바탕으로 한 평가
+                    3. 개선 가능한 실행 방안 포함
+                    4. 면접자의 잠재력과 성장 가능성 고려
+                    5. 문화적, 개인적 특성에 대한 편견 배제
+                    6. 질문과 답변의 연관성을 중점적으로 분석
+                    7. 기술적 질문에 대한 정확성과 깊이 있는 이해도 평가
+                    """
+            ));
 
             JSONArray messages = new JSONArray();
             messages.put(new JSONObject()
@@ -197,7 +338,7 @@ public class BedrockService{
                     .put("content", contentArray));
 
             JSONObject inferenceConfig = new JSONObject()
-                    .put("maxTokens", 1000)
+                    .put("maxTokens", 10000)
                     .put("temperature", 0.3)
                     .put("topP", 0.9)
                     .put("topK", 20);
