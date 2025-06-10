@@ -19,7 +19,6 @@ import com.example.intelliview.repository.MemberRepository;
 import com.example.intelliview.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class InterviewService {
             .githubUsername(member.getUsername())
             .qualification(interviewInfoDto.getQualification())
             .member(member)
-            .createdAt(LocalDate.now())
+            .createdAt(LocalDateTime.now())
             .build();
         interviewRepository.save(interview);
         return interview.getId();
