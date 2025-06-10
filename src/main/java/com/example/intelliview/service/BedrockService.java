@@ -179,7 +179,7 @@ public class BedrockService{
             JSONArray contentArray = new JSONArray();
             contentArray.put(new JSONObject()
                     .put("video", new JSONObject()
-                            .put("format", "mp4")
+                            .put("format", "webm")
                             .put("source", new JSONObject()
                                     .put("s3Location", new JSONObject()
                                             .put("uri", s3Uri)
