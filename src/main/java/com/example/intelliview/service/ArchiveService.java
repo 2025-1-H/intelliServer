@@ -31,23 +31,34 @@ public class ArchiveService {
     private final InterviewReportRepository interviewReportRepository;
 
     public static Integer extractTotalScore(String content) {
+//        if (content == null) return null;
+//
+//        int total = 0;
+//        int count = 0;
+//        Pattern pattern = Pattern.compile("발표 전달력: (\\d)점|톤: (\\d)점|내용 완성도: (\\d)점");
+//        Matcher matcher = pattern.matcher(content);
+//
+//        while (matcher.find()) {
+//            for (int i = 1; i <= 3; i++) {
+//                if (matcher.group(i) != null) {
+//                    total += Integer.parseInt(matcher.group(i));
+//                    count++;
+//                }
+//            }
+//        }
+//        // 평균점수 등 추가로 원한다면 (double)total/count 반환 등도 가능
+//        return count == 0 ? null : total;
         if (content == null) return null;
 
-        int total = 0;
-        int count = 0;
-        Pattern pattern = Pattern.compile("발표 전달력: (\\d)점|톤: (\\d)점|내용 완성도: (\\d)점");
+        Pattern pattern = Pattern.compile(
+                "<h3>총점: *<span class=\"total-score-value\">(\\d+)</span>/100</h3>"
+        );
         Matcher matcher = pattern.matcher(content);
 
-        while (matcher.find()) {
-            for (int i = 1; i <= 3; i++) {
-                if (matcher.group(i) != null) {
-                    total += Integer.parseInt(matcher.group(i));
-                    count++;
-                }
-            }
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
         }
-        // 평균점수 등 추가로 원한다면 (double)total/count 반환 등도 가능
-        return count == 0 ? null : total;
+        return null;
     }
 
     public ArchiveSummaryDto getMonthArchiveSummary(Member member, int year, int month) {
