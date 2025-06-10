@@ -1,6 +1,6 @@
 package com.example.intelliview.dto.interview;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class InterviewReportListDto {
     public static class InterviewReportTitleDto {
         private Long id;
         private String occupation;
-        private LocalDate date;
+        private LocalDateTime date;
     }
 
 }
