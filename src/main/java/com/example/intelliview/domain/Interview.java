@@ -2,6 +2,7 @@ package com.example.intelliview.domain;
 
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +33,8 @@ public class Interview extends BaseTimeEntity{
     private String qualification;
 
     private String githubUsername;
+
+    private LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name = "u_id", nullable = false)

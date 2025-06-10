@@ -2,6 +2,8 @@ package com.example.intelliview.controller;
 
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
+import com.example.intelliview.dto.interview.InterviewReportListDto;
+import com.example.intelliview.dto.interview.InterviewReportListDto.InterviewReportTitleListDto;
 import com.example.intelliview.dto.interview.InterviewReportResponseDto;
 import com.example.intelliview.repository.InterviewRepository;
 import com.example.intelliview.service.BedrockService;
@@ -59,5 +61,11 @@ public class InterviewController {
     @GetMapping("/{id}/report")
     public ResponseEntity<InterviewReportResponseDto> getInterviewReport(@PathVariable Long id) {
         return ResponseEntity.ok(interviewService.getInterviewReport(id));
+    }
+
+    @GetMapping("/report")
+    public ResponseEntity<InterviewReportTitleListDto> getInterviewReportList(HttpServletRequest request) {
+        String token = request.getHeader("Authorization").substring(7);
+        return ResponseEntity.ok(interviewService.getInterviewReportList(token));
     }
 }

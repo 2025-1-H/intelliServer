@@ -9,6 +9,8 @@ import com.example.intelliview.domain.QuestionType;
 import com.example.intelliview.dto.interview.InterviewInfoDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionsResponseDto;
 import com.example.intelliview.dto.interview.InterviewQuestionsDto.QuestionDto;
+import com.example.intelliview.dto.interview.InterviewReportListDto.InterviewReportTitleDto;
+import com.example.intelliview.dto.interview.InterviewReportListDto.InterviewReportTitleListDto;
 import com.example.intelliview.dto.interview.InterviewReportResponseDto;
 import com.example.intelliview.jwt.JWTUtil;
 import com.example.intelliview.repository.InterviewReportRepository;
@@ -17,6 +19,8 @@ import com.example.intelliview.repository.MemberRepository;
 import com.example.intelliview.repository.QuestionRepository;
 import jakarta.transaction.Transactional;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +48,7 @@ public class InterviewService {
             .githubUsername(member.getUsername())
             .qualification(interviewInfoDto.getQualification())
             .member(member)
+            .createdAt(LocalDate.now())
             .build();
         interviewRepository.save(interview);
         return interview.getId();
@@ -77,5 +82,20 @@ public class InterviewService {
             .videoUrl(interviewReport.getVideoUrl())
             .content(interviewReport.getContent())
             .build();
+    }
+
+    public InterviewReportTitleListDto getInterviewReportList(String token) {
+        Member member = memberRepository.findByEmail(jwtUtil.getEmail(token));
+        List<InterviewReportTitleDto> titleLists = new ArrayList<>();
+        List<Interview> interviewList = interviewRepository.findByMember(member);
+        for (Interview interview : interviewList) {
+            InterviewReport report = interviewReportRepository.findByInterviewId(interview.getId());
+            titleLists.add(InterviewReportTitleDto.builder()
+                .date(interview.getCreatedAt())
+                .occupation(interview.getOccupation())
+                .id(report.getId())
+                .build());
+        }
+        return InterviewReportTitleListDto.builder().reports(titleLists).build();
     }
 }
