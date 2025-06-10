@@ -28,7 +28,7 @@ public class S3Uploader {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(key)
-                    .contentType(file.getContentType())
+                    .contentType("video/webm")
                     .build();
 
             s3ClientVideo.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
