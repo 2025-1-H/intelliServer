@@ -398,7 +398,7 @@ public class BedrockService{
 
     public void createProjectQuestions(Interview interview) throws IOException {
         Member member = interview.getMember();
-        //jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
+        jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
         String basicQuery = """
             당신은 기술 면접관 역할을 맡고 있습니다.
             
