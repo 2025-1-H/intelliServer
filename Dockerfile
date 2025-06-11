@@ -5,11 +5,6 @@ ENV TZ=Asia/Seoul
 RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 RUN apt-get update && apt-get install -y curl
 
-RUN apt-get update && \
-    apt-get install -y curl ffmpeg && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
 # 작업 디렉토리를 설정
 WORKDIR /app
 
