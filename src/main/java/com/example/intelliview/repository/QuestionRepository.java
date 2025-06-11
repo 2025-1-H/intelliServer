@@ -18,6 +18,6 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
         "    LIMIT 3 " +
         ")",
         nativeQuery = true)
-    List<Question> findRandomUnsolvedProjectQuestions(@Param("memberId") Long memberId);
+    List<Question> findRandomUnsolvedProjectQuestions();
 
 }
