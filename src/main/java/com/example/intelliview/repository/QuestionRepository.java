@@ -1,5 +1,6 @@
 package com.example.intelliview.repository;
 
+import com.example.intelliview.domain.Member;
 import com.example.intelliview.domain.Question;
 import com.example.intelliview.domain.QuestionType;
 import java.util.List;
@@ -12,11 +13,13 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT * FROM question " +
         "WHERE id IN ( " +
         "    SELECT id FROM question " +
-        "    WHERE question_type = 'PROJECT' AND is_solved = FALSE " +
+        "    WHERE question_type = 'PROJECT' " +
+        "    AND is_solved = FALSE " +
+        "    AND u_id = :memberId " +
         "    ORDER BY RANDOM() " +
         "    LIMIT 3 " +
         ")",
         nativeQuery = true)
-    List<Question> findRandomUnsolvedProjectQuestions();
+    List<Question> findRandomUnsolvedProjectQuestions(@Param("memberId") Long memberId);
 
 }
