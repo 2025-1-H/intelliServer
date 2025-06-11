@@ -382,6 +382,14 @@ public class BedrockService{
 
             return text;
 
+        } catch (SdkServiceException sse) {
+            log.error("Bedrock service exception (HTTP {}) : {}", sse.statusCode(), sse.getMessage(), sse);
+            throw new RuntimeException("Bedrock service 에러: " + sse.getMessage(), sse);
+
+        } catch (SdkClientException sce) {
+            log.error("Bedrock client exception: {}", sce.getMessage(), sce);
+            throw new RuntimeException("Bedrock client 에러: " + sce.getMessage(), sce);
+
         } catch (Exception e) {
             log.error("면접 분석 실패", e);
             throw new RuntimeException("Interview video analysis failed");
