@@ -70,12 +70,12 @@ public class BedrockService{
     private String awsAccountId;
     private final JSoupService jsoupService;
 
-    public ArrayList<String> generateInterviewQuestions(Interview interview) throws JsonProcessingException {
-        ArrayList<String> technicalQuestions = createTechnicalQuestions(interview);
+    public ArrayList<Question> generateInterviewQuestions(Interview interview) throws JsonProcessingException {
+        ArrayList<Question> technicalQuestions = createTechnicalQuestions(interview);
         return technicalQuestions;
     }
 
-    private ArrayList<String> createTechnicalQuestions(Interview interview) throws JsonProcessingException {
+    private ArrayList<Question> createTechnicalQuestions(Interview interview) throws JsonProcessingException {
         JSONObject object = new JSONObject();
         String basicQuery = """
             You are an AI assistant tasked with generating technical interview questions for a computer engineering position.
@@ -152,7 +152,7 @@ public class BedrockService{
         String rawText = rootNode.get("content").get(0).get("text").asText();
         String cleanJson = rawText.replaceAll("(?s)```json\\s*|\\s*```", "");
         List<GeneratedQuestionDto> questions = objectMapper.readValue(cleanJson, new TypeReference<>() {});
-        ArrayList<String> questionList = new ArrayList<>();
+        ArrayList<Question> questionList = new ArrayList<>();
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
                     .question(generatedQuestion.getQuestion())
@@ -162,7 +162,7 @@ public class BedrockService{
                     .questionType(QuestionType.TECHNICAL)
                     .build();
             questionRepository.save(question);
-            questionList.add(generatedQuestion.getQuestion());
+            questionList.add(question);
         }
         return(questionList);
     }
@@ -398,7 +398,7 @@ public class BedrockService{
 
     public void createProjectQuestions(Interview interview) throws IOException {
         Member member = interview.getMember();
-        jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
+        //jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
         String basicQuery = """
             당신은 기술 면접관 역할을 맡고 있습니다.
             
@@ -412,8 +412,9 @@ public class BedrockService{
             - category: BACKEND, FRONTEND, DEVOPS, CS 중 하나
             - difficulty: 1~5 난이도 숫자
             
-            질문은 후보자의 프로젝트 내용에 기반해야 하며, 일반적인 CS 질문은 가능한 피해주세요.
+            질문은 후보자의 프로젝트 내용에 기반해야합니다.
             출력 형식은 각 질문을 JSON 객체 배열로 만들어주세요. 이 외의 코멘트는 달지 말아주세요.
+            안된다고 하지말고 어떻게든 결과물을 만들어주세요.
             """;
         String query = basicQuery.replace("{{OCCUPATION}}", interview.getOccupation());
         query = query.replace("{{S3_PATH}}", "repos/" + member.getId());
