@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.SdkBytes;
+import software.amazon.awssdk.core.exception.SdkClientException;
+import software.amazon.awssdk.core.exception.SdkServiceException;
 import software.amazon.awssdk.services.bedrockagentruntime.BedrockAgentRuntimeClient;
 import software.amazon.awssdk.services.bedrockagentruntime.model.KnowledgeBaseRetrievalConfiguration;
 import software.amazon.awssdk.services.bedrockagentruntime.model.KnowledgeBaseRetrieveAndGenerateConfiguration;
@@ -164,7 +168,6 @@ public class BedrockService{
     }
 
     public String uploadToS3AndAnalyzeInterview(MultipartFile videoFile, Long interviewId) {
-
         try {
             // 1. S3 업로드
             UploadedVideoDto uploaded = s3Uploader.upload(videoFile);
