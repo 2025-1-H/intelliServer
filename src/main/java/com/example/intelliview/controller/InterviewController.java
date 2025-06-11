@@ -6,6 +6,7 @@ import com.example.intelliview.dto.interview.InterviewReportListDto;
 import com.example.intelliview.dto.interview.InterviewReportListDto.InterviewReportTitleListDto;
 import com.example.intelliview.dto.interview.InterviewReportResponseDto;
 import com.example.intelliview.repository.InterviewRepository;
+import com.example.intelliview.service.AnalysisAsyncService;
 import com.example.intelliview.service.BedrockService;
 import com.example.intelliview.service.InterviewService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ public class InterviewController {
     private final InterviewService interviewService;
     private final BedrockService bedrockService;
     private final InterviewRepository interviewRepository;
+    private final AnalysisAsyncService analysisAsyncService;
 
     @PostMapping("/info")
     public ResponseEntity<Long> getInterviewInfo(@RequestBody InterviewInfoDto interviewInfoDto, HttpServletRequest request) {
