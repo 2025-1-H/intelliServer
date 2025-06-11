@@ -46,4 +46,6 @@ public class Question extends BaseTimeEntity{
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<InterviewAnswer> interviewAnswers = new ArrayList<>();
 
+    public void setIsSolved(Boolean isSolved) {this.isSolved = isSolved;}
+
 }

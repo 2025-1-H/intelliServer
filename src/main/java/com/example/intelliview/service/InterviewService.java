@@ -57,14 +57,16 @@ public class InterviewService {
         Interview interview = interviewRepository.findById(id).orElseThrow();
         interview.updateStatus(InterviewStatus.IN_PROGRESS);
         List<QuestionDto> QuestionDtos = new ArrayList<>();
-        ArrayList<String> interviewQuestions = bedrockService.generateInterviewQuestions(interview);
-        for (String question : interviewQuestions) {
+        ArrayList<Question> interviewQuestions = bedrockService.generateInterviewQuestions(interview);
+        for (Question question : interviewQuestions) {
+            question.setIsSolved(true);
             QuestionDtos.add(QuestionDto.builder()
                 .category(String.valueOf(QuestionType.TECHNICAL))
-                .question(question)
+                .question(question.getQuestion())
                 .build());
         }
         for (Question question : questionRepository.findRandomUnsolvedProjectQuestions()) {
+            question.setIsSolved(true);
             QuestionDtos.add(QuestionDto.builder()
                 .category(String.valueOf(QuestionType.PROJECT))
                 .question(question.getQuestion())
