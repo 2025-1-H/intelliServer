@@ -38,9 +38,6 @@ public class Question extends BaseTimeEntity{
     @Builder.Default
     private Boolean isSolved = false;
 
-    @ManyToOne
-    @JoinColumn(name = "u_id", nullable = false)
-    private Member member;
 
     @Builder.Default
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)

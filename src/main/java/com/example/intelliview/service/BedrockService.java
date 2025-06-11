@@ -155,7 +155,6 @@ public class BedrockService{
         ArrayList<Question> questionList = new ArrayList<>();
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
-                    .member(interview.getMember())
                     .question(generatedQuestion.getQuestion())
                     .category(generatedQuestion.getCategory())
                     .difficulty(generatedQuestion.getDifficulty())
@@ -433,7 +432,6 @@ public class BedrockService{
 
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
-                    .member(member)
                     .question(generatedQuestion.getQuestion())
                     .category(generatedQuestion.getCategory())
                     .difficulty(generatedQuestion.getDifficulty())

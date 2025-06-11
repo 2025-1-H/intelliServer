@@ -65,7 +65,7 @@ public class InterviewService {
                 .question(question.getQuestion())
                 .build());
         }
-        for (Question question : questionRepository.findRandomUnsolvedProjectQuestions(interview.getMember().getId())) {
+        for (Question question : questionRepository.findRandomUnsolvedProjectQuestions()) {
             question.setIsSolved(true);
             QuestionDtos.add(QuestionDto.builder()
                 .category(String.valueOf(QuestionType.PROJECT))

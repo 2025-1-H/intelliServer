@@ -13,9 +13,7 @@ public interface QuestionRepository extends JpaRepository<Question, Long> {
     @Query(value = "SELECT * FROM question " +
         "WHERE id IN ( " +
         "    SELECT id FROM question " +
-        "    WHERE question_type = 'PROJECT' " +
-        "    AND is_solved = FALSE " +
-        "    AND u_id = :memberId " +
+        "    WHERE question_type = 'PROJECT' AND is_solved = FALSE " +
         "    ORDER BY RANDOM() " +
         "    LIMIT 3 " +
         ")",
