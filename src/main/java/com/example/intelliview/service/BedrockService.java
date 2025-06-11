@@ -155,6 +155,7 @@ public class BedrockService{
         ArrayList<Question> questionList = new ArrayList<>();
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
+                    .member(interview.getMember())
                     .question(generatedQuestion.getQuestion())
                     .category(generatedQuestion.getCategory())
                     .difficulty(generatedQuestion.getDifficulty())
@@ -398,7 +399,7 @@ public class BedrockService{
 
     public void createProjectQuestions(Interview interview) throws IOException {
         Member member = interview.getMember();
-        //jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
+        jsoupService.uploadToS3(member.getGithubUsername(), member.getId());
         String basicQuery = """
             당신은 기술 면접관 역할을 맡고 있습니다.
             
@@ -432,6 +433,7 @@ public class BedrockService{
 
         for (GeneratedQuestionDto generatedQuestion: questions) {
             Question question = Question.builder()
+                    .member(member)
                     .question(generatedQuestion.getQuestion())
                     .category(generatedQuestion.getCategory())
                     .difficulty(generatedQuestion.getDifficulty())
